@@ -1,8 +1,10 @@
 import 'package:news2_app/api_service.dart';
-import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:flutter/material.dart';
 import 'customListTile.dart';
 import 'article_model.dart';
+import 'category_card.dart';
+import 'category_model.dart';
+import 'category_data.dart';
 
 void main() {
   runApp(MyApp());
@@ -22,17 +24,21 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+
+  List<CategoryModel> categories = List<CategoryModel>();
+
   ApiService client = ApiService();
   ScrollController _scrollController = new ScrollController();
    @override
   void initState(){
     super.initState();
-    client.getArticle();
-    _scrollController.addListener(() {
-      if(_scrollController.position.pixels == _scrollController.position.maxScrollExtent){
-        client.getArticle();
-      }
-    });
+    categories = getCategories();
+    //client.getArticle();
+    //_scrollController.addListener(() {
+      //if(_scrollController.position.pixels == _scrollController.position.maxScrollExtent){
+        //client.getArticle();
+      //}
+   // });
   }
 
   @override
@@ -48,7 +54,7 @@ class _HomePageState extends State<HomePage> {
         title: Row(
           children: <Widget>[
             Text("News", style: TextStyle(
-              color: Colors.blue,
+              color: Colors.black,
             ),),
             Text("TODAY",
               style: TextStyle(
@@ -60,22 +66,49 @@ class _HomePageState extends State<HomePage> {
         backgroundColor: Colors.white,
       ),
 
-      body: FutureBuilder(
-        future: client.getArticle(),
-        builder: (BuildContext context, AsyncSnapshot<List<Article>> snapshot) {
-          if (snapshot.hasData) {
-            List<Article> articles = snapshot.data;
-            return ListView.builder(
-              controller: _scrollController,
-              itemCount: articles.length,
-              itemBuilder: (context, index) =>
-                  customListTile(articles[index], context),
-            );
-          }
-          return Center(
-            child: CircularProgressIndicator(),
-          );
-        },
+      body: SingleChildScrollView(
+        child: Container(
+          child: Column(
+            children: [
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 16),
+                height: 70,
+                child: ListView.builder(
+                    shrinkWrap: true,
+                    scrollDirection: Axis.horizontal,
+                    itemCount: categories.length,
+                    itemBuilder: (context, index) {
+                      return CategoryCard(
+                        imageAssetUrl: categories[index].imageAssetUrl,
+                        categoryName: categories[index].categorieName,
+                      );
+                    }),
+              ),
+
+              Container(
+                child: FutureBuilder(
+
+                  future: client.getArticle(),
+                  builder: (BuildContext context, AsyncSnapshot<List<Article>> snapshot) {
+                    if (snapshot.hasData) {
+                      List<Article> articles = snapshot.data;
+                      return ListView.builder(
+                        shrinkWrap: true,
+                        controller: _scrollController,
+                        itemCount: articles.length,
+                        itemBuilder: (context, index) =>
+                            customListTile(articles[index], context),
+                      );
+                    }
+                    return Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  },
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
