@@ -32,6 +32,8 @@ dependencies:
   infinite_scroll_pagination: ^1.1.1
   flutter_bloc: ^6.0.5
   cached_network_image: ^2.0.0
+  webview_flutter: ^0.3.19+9
+
 
 dev_dependencies:
   flutter_test:

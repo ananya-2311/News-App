@@ -1,5 +1,5 @@
 import 'package:news2_app/article_model.dart';
-import 'package:news2_app/articles_details_page.dart';
+import 'package:news2_app/article_web.dart';
 import 'package:flutter/material.dart';
 
 
@@ -10,7 +10,7 @@ Widget customListTile(Article article, BuildContext context) {
           context,
           MaterialPageRoute(
               builder: (context) => ArticlePage(
-                article: article,
+                postUrl: article.url,
               )));
     },
     child: Container(
