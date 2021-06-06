@@ -26,7 +26,7 @@ class _ArticlePageState extends State<ArticlePage> {
           onPressed: () => Navigator.of(context).pop(),
         ),
         title: Padding(
-          padding: const EdgeInsets.fromLTRB(0, 8, 80, 8),
+          padding: const EdgeInsets.fromLTRB(70, 0, 0, 0),
           child: Row(
             children: <Widget>[
               Text("News", style: TextStyle(

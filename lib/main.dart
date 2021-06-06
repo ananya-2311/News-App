@@ -87,7 +87,6 @@ class _HomePageState extends State<HomePage> {
 
               Container(
                 child: FutureBuilder(
-
                   future: client.getArticle(),
                   builder: (BuildContext context, AsyncSnapshot<List<Article>> snapshot) {
                     if (snapshot.hasData) {

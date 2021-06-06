@@ -71,7 +71,7 @@ Widget customListTile(Article article, BuildContext context) {
             height: 4,
           ),
           Text(
-            article.description ??'default value',
+            article.description ??'Tap to know more',
             maxLines: 2,
             style: TextStyle(color: Colors.black54, fontSize: 14),
           )
