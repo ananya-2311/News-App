@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:news2_app/article_model.dart';
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
@@ -19,17 +20,26 @@ class _ArticlePageState extends State<ArticlePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Row(
-          children: <Widget>[
-            Text("News", style: TextStyle(
-              color: Colors.black,
-            ),),
-            Text("TODAY",
-              style: TextStyle(
-                color: Colors.red,
-              ),)
-          ],
+        centerTitle: true,
+        leading: new IconButton(
+          icon: new Icon(Icons.arrow_back, color: Colors.red),
+          onPressed: () => Navigator.of(context).pop(),
         ),
+        title: Padding(
+          padding: const EdgeInsets.fromLTRB(0, 8, 80, 8),
+          child: Row(
+            children: <Widget>[
+              Text("News", style: TextStyle(
+                color: Colors.black,
+              ),),
+              Text("TODAY",
+                style: TextStyle(
+                  color: Colors.red,
+                ),)
+            ],
+          ),
+        ),
+
         elevation: 0.0,
         backgroundColor: Colors.white,
       ),
